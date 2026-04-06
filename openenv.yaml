@@ -1,0 +1,14 @@
+name: code-review-env
+description: AI environment for code review
+
+actions:
+  - report_bug
+  - fix_code
+  - improve_code
+  - approve
+  - suggest_refactor
+
+observation_space:
+  type: text
+
+reward_range: [0.0, 1.0]
