@@ -1,58 +1,60 @@
 # 🚀 Code Review AI Environment
 
-This project simulates a real-world **AI-powered code review system** where an intelligent agent analyzes code snippets and performs actions such as bug detection, performance optimization, and security analysis.
+🔗 **Live Demo:** https://prateekpro-code-review-env.hf.space  
 
 ---
 
 ## 🧠 Overview
 
+This project simulates a real-world **AI-powered code review system** where an intelligent agent analyzes code snippets and performs:
+
+- 🐞 Bug detection  
+- ⚡ Performance optimization  
+- 🔐 Security analysis  
+
 We built a **hybrid AI system** that combines:
 
-- 🤖 **LLM-based reasoning (AI)**
-- 🧠 **Rule-based fallback system**
+- 🤖 LLM-based reasoning  
+- 🧠 Rule-based fallback  
 
-This ensures:
-- Intelligent decision-making
-- High reliability even when APIs fail
+This ensures reliable performance even when AI is unavailable.
 
 ---
 
 ## ✨ Features
 
-- 🔍 Multi-type issue detection  
+- 🔍 Detects multiple issue types  
   - Syntax errors  
   - Performance issues  
   - Security vulnerabilities  
 
-- ⚖️ Difficulty-based evaluation  
-  - Easy / Medium / Hard levels  
+- ⚖️ Difficulty levels  
+  - Easy / Medium / Hard  
 
-- 🎯 Reward shaping system  
+- 🎯 Reward system  
   - Full reward for correct actions  
-  - Partial reward for near-correct decisions  
+  - Partial reward for near-correct actions  
 
-- 🔁 Hybrid AI architecture  
+- 🔁 Hybrid architecture  
   - Uses AI when available  
-  - Falls back to rule-based logic if needed  
+  - Falls back to rule-based logic  
 
-- ⚡ Async environment design  
+- ⚡ Async environment  
 
-- 🐳 Dockerized & OpenEnv compatible  
+- 🐳 Docker + OpenEnv compatible  
 
 ---
 
 ## 🤖 Actions
 
-The agent can perform:
-
 - `report_bug` → Detect bugs or security issues  
-- `improve_code` → Suggest optimizations  
+- `improve_code` → Suggest improvements  
 - `approve` → Mark code as correct  
 
 ---
 
 ## 🧪 Example
 
-### Input Code:
+### Input:
 ```python
 eval(input())
