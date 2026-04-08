@@ -10,6 +10,27 @@ class GraderRequest(BaseModel):
     action: str
 
 
+TASKS = [
+    {
+        "task": "bug_detection",
+        "description": "Detect bugs or security issues in code",
+        "input": "eval(input())",
+        "correct_action": "report_bug",
+    },
+    {
+        "task": "performance_review",
+        "description": "Suggest performance improvements in inefficient code",
+        "input": "for i in range(len(arr)): print(arr[i])",
+        "correct_action": "improve_code",
+    },
+    {
+        "task": "clean_code_approval",
+        "description": "Approve correct and clean code",
+        "input": "print('Hello World')",
+        "correct_action": "approve",
+    },
+]
+
 TASK_EXPECTED_ACTIONS = {
     "bug_detection": "report_bug",
     "performance_review": "improve_code",
@@ -29,14 +50,16 @@ def health():
 
 @app.post("/reset")
 def reset():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "tasks": TASKS,
+    }
 
 
 @app.post("/grader")
 def grader(payload: GraderRequest):
     expected = TASK_EXPECTED_ACTIONS.get(payload.task)
 
-    # Unknown task → small non-zero score
     if expected is None:
         return {
             "score": 0.1,
@@ -46,7 +69,6 @@ def grader(payload: GraderRequest):
             "reason": "unknown task",
         }
 
-    # score must be strictly between 0 and 1
     if payload.action == expected:
         score = 0.9
         reason = "correct"

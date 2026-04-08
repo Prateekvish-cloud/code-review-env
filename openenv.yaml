@@ -2,9 +2,12 @@ name: code-review-env
 description: AI environment for code review with multiple tasks and graders
 
 tasks:
-  - bug_detection
-  - performance_review
-  - clean_code_approval
+  - name: bug_detection
+    description: Detect bugs in code
+  - name: performance_review
+    description: Suggest performance improvements
+  - name: clean_code_approval
+    description: Approve correct code
 
 actions:
   - report_bug
@@ -14,4 +17,4 @@ actions:
 observation_space:
   type: text
 
-reward_range: [0.0, 1.0] 
+reward_range: [0.1, 0.9]
