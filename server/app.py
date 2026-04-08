@@ -46,7 +46,7 @@ def grader(payload: GraderRequest):
             "reason": "unknown task",
         }
 
-    # ✅ FIX: score must be strictly between 0 and 1
+    # score must be strictly between 0 and 1
     if payload.action == expected:
         score = 0.9
         reason = "correct"
