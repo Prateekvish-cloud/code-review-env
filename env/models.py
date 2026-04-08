@@ -6,6 +6,7 @@ class CodeAction:
 
 @dataclass
 class CodeObservation:
+    task: str        # 🔥 NEW FIELD (VERY IMPORTANT)
     code: str
     difficulty: str
     hint: str

@@ -1,10 +1,10 @@
-# 🚀 Code Review AI Environment
+# Code Review AI Environment
 
 🔗 **Live Demo:** https://prateekpro-code-review-env.hf.space  
 
 ---
 
-## 🧠 Overview
+## Overview
 
 This project simulates a real-world **AI-powered code review system** where an intelligent agent analyzes code snippets and performs:
 
@@ -15,37 +15,37 @@ This project simulates a real-world **AI-powered code review system** where an i
 We built a **hybrid AI system** that combines:
 
 - 🤖 LLM-based reasoning  
-- 🧠 Rule-based fallback  
+- 🧠 Rule-based fallback system  
 
 This ensures reliable performance even when AI is unavailable.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔍 Detects multiple issue types  
+- 🔍 Multi-type issue detection  
   - Syntax errors  
   - Performance issues  
   - Security vulnerabilities  
 
-- ⚖️ Difficulty levels  
-  - Easy / Medium / Hard  
+- ⚖️ Difficulty-based evaluation  
+  - Easy / Medium / Hard levels  
 
-- 🎯 Reward system  
+- 🎯 Reward shaping system  
   - Full reward for correct actions  
   - Partial reward for near-correct actions  
 
-- 🔁 Hybrid architecture  
+- 🔁 Hybrid AI architecture  
   - Uses AI when available  
   - Falls back to rule-based logic  
 
-- ⚡ Async environment  
+- ⚡ Async environment design  
 
-- 🐳 Docker + OpenEnv compatible  
+- 🐳 Dockerized & OpenEnv compatible  
 
 ---
 
-## 🤖 Actions
+## Actions
 
 - `report_bug` → Detect bugs or security issues  
 - `improve_code` → Suggest improvements  
@@ -53,7 +53,7 @@ This ensures reliable performance even when AI is unavailable.
 
 ---
 
-## 🧪 Example
+## Example
 
 ### Input:
 ```python

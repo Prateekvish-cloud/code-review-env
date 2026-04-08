@@ -3,8 +3,8 @@ from .models import CodeObservation, StepResult
 from .data import DATA
 from .reward import calculate_reward
 
-class CodeReviewEnv:
 
+class CodeReviewEnv:
     def __init__(self):
         self.current = None
         self.steps = 0
@@ -15,14 +15,15 @@ class CodeReviewEnv:
         return cls()
 
     async def reset(self):
-        self.current = random.choice(DATA)
         self.steps = 0
+        self.current = random.choice(DATA)
 
         return StepResult(
             observation=CodeObservation(
+                task=self.current["task"],
                 code=self.current["code"],
                 difficulty=self.current["difficulty"],
-                hint="Analyze the code"
+                hint=f"Perform task: {self.current['task']}"
             ),
             reward=0.0,
             done=False
@@ -42,9 +43,10 @@ class CodeReviewEnv:
 
         return StepResult(
             observation=CodeObservation(
+                task=self.current["task"],
                 code=self.current["code"],
                 difficulty=self.current["difficulty"],
-                hint="Analyze the code"
+                hint=f"Perform task: {self.current['task']}"
             ),
             reward=reward,
             done=done

@@ -1,12 +1,15 @@
 name: code-review-env
-description: AI environment for code review
+description: AI environment for code review with multiple tasks and graders
+
+tasks:
+  - bug_detection
+  - performance_review
+  - clean_code_approval
 
 actions:
   - report_bug
-  - fix_code
   - improve_code
   - approve
-  - suggest_refactor
 
 observation_space:
   type: text
