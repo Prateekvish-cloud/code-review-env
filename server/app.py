@@ -12,22 +12,16 @@ class GraderRequest(BaseModel):
 
 TASKS = [
     {
-        "task": "bug_detection",
-        "description": "Detect bugs or security issues in code",
+        "id": "bug_detection",
         "input": "eval(input())",
-        "correct_action": "report_bug",
     },
     {
-        "task": "performance_review",
-        "description": "Suggest performance improvements in inefficient code",
+        "id": "performance_review",
         "input": "for i in range(len(arr)): print(arr[i])",
-        "correct_action": "improve_code",
     },
     {
-        "task": "clean_code_approval",
-        "description": "Approve correct and clean code",
+        "id": "clean_code_approval",
         "input": "print('Hello World')",
-        "correct_action": "approve",
     },
 ]
 
@@ -51,8 +45,7 @@ def health():
 @app.post("/reset")
 def reset():
     return {
-        "status": "ok",
-        "tasks": TASKS,
+        "tasks": TASKS
     }
 
 
