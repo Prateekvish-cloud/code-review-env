@@ -36,23 +36,30 @@ def reset():
 def grader(payload: GraderRequest):
     expected = TASK_EXPECTED_ACTIONS.get(payload.task)
 
+    # Unknown task → small non-zero score
     if expected is None:
         return {
-            "score": 0.0,
+            "score": 0.1,
             "task": payload.task,
             "expected_action": None,
             "received_action": payload.action,
             "reason": "unknown task",
         }
 
-    score = 1.0 if payload.action == expected else 0.0
+    # ✅ FIX: score must be strictly between 0 and 1
+    if payload.action == expected:
+        score = 0.9
+        reason = "correct"
+    else:
+        score = 0.1
+        reason = "incorrect"
 
     return {
         "score": score,
         "task": payload.task,
         "expected_action": expected,
         "received_action": payload.action,
-        "reason": "correct" if score == 1.0 else "incorrect",
+        "reason": reason,
     }
 
 
