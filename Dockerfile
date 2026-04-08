@@ -2,11 +2,13 @@ FROM python:3.10
 
 WORKDIR /app
 
-# Copy all files
 COPY . .
 
-# Install required dependencies
-RUN pip install --no-cache-dir openai openenv-core
+# Install all dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Run inference
-CMD ["python", "inference.py"]
+# Expose port (HF uses 7860)
+EXPOSE 7860
+
+# Run FastAPI server
+CMD ["python", "server/app.py"]
