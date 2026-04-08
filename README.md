@@ -1,6 +1,15 @@
+---
+title: Code Review Env
+emoji: 🚀
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # 🚀 Code Review AI Environment
 
-🔗 **Live Demo:** https://prateekpro-code-review-env.hf.space
+🔗 **Live Demo:** https://prateekpro-code-review-env.hf.space  
 
 ---
 
@@ -8,14 +17,14 @@
 
 This project simulates a real-world **AI-powered code review system** where an intelligent agent analyzes code snippets and performs:
 
-* 🐞 Bug detection
-* ⚡ Performance optimization
-* 🔐 Security analysis
+- 🐞 Bug detection  
+- ⚡ Performance optimization  
+- 🔐 Security analysis  
 
 We built a **hybrid AI system** that combines:
 
-* 🤖 LLM-based reasoning
-* 🧠 Rule-based fallback system
+- 🤖 LLM-based reasoning  
+- 🧠 Rule-based fallback system  
 
 This ensures reliable performance even when AI is unavailable.
 
@@ -23,29 +32,25 @@ This ensures reliable performance even when AI is unavailable.
 
 ## ✨ Features
 
-* 🔍 Multi-type issue detection
+- 🔍 Multi-type issue detection  
+  - Syntax errors  
+  - Performance issues  
+  - Security vulnerabilities  
 
-  * Syntax errors
-  * Performance issues
-  * Security vulnerabilities
+- ⚖️ Difficulty-based evaluation  
+  - Easy / Medium / Hard levels  
 
-* ⚖️ Difficulty-based evaluation
+- 🎯 Reward shaping system  
+  - Full reward for correct actions  
+  - Partial reward for near-correct actions  
 
-  * Easy / Medium / Hard levels
+- 🔁 Hybrid AI architecture  
+  - Uses AI when available  
+  - Falls back to rule-based logic  
 
-* 🎯 Reward shaping system
+- ⚡ Async environment design  
 
-  * Full reward for correct actions
-  * Partial reward for near-correct actions
-
-* 🔁 Hybrid AI architecture
-
-  * Uses AI when available
-  * Falls back to rule-based logic
-
-* ⚡ Async environment design
-
-* 🐳 Dockerized & OpenEnv compatible
+- 🐳 Dockerized & OpenEnv compatible  
 
 ---
 
@@ -53,9 +58,9 @@ This ensures reliable performance even when AI is unavailable.
 
 This environment includes **3 tasks with graders**:
 
-* 🐞 **Bug Detection** → Identify syntax, logic, or security issues
-* ⚡ **Performance Review** → Suggest optimizations
-* ✅ **Clean Code Approval** → Approve correct code
+- 🐞 **Bug Detection** → Identify syntax, logic, or security issues  
+- ⚡ **Performance Review** → Suggest optimizations  
+- ✅ **Clean Code Approval** → Approve correct code  
 
 ---
 
@@ -63,42 +68,14 @@ This environment includes **3 tasks with graders**:
 
 The agent can perform:
 
-* `report_bug` → Detect bugs or security issues
-* `improve_code` → Suggest improvements
-* `approve` → Mark code as correct
+- `report_bug` → Detect bugs or security issues  
+- `improve_code` → Suggest improvements  
+- `approve` → Mark code as correct  
 
 ---
 
 ## 🧪 Example
 
 ### Input:
-
 ```python
 eval(input())
-```
-
-### Expected Action:
-
-```
-report_bug
-```
-
----
-
-## ⚙️ API Endpoints
-
-* `/` → Check if environment is running
-* `/reset` → Reset environment
-* `/grader` → Evaluate agent action
-
----
-
-## 🐳 Deployment
-
-This project is fully **Dockerized** and compatible with **OpenEnv validation**.
-
----
-
-## 🏁 Status
-
-✅ Ready for submission
