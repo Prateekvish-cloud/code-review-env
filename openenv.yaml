@@ -8,18 +8,27 @@ tasks:
     max_steps: 10
     grader:
       type: llm
-      prompt_template: "Score the bug detection strictly between 0 and 1."
+      prompt_template: |
+        You are a grader.
+        Evaluate the action for bug detection.
+        Return ONLY a number between 0.1 and 0.9.
 
   - id: performance_review
     difficulty: medium
     max_steps: 15
     grader:
       type: llm
-      prompt_template: "Score the performance review strictly between 0 and 1."
+      prompt_template: |
+        You are a grader.
+        Evaluate the action for performance review.
+        Return ONLY a number between 0.1 and 0.9.
 
   - id: clean_code_approval
     difficulty: hard
     max_steps: 20
     grader:
       type: llm
-      prompt_template: "Score the code approval strictly between 0 and 1."
+      prompt_template: |
+        You are a grader.
+        Evaluate the action for clean code approval.
+        Return ONLY a number between 0.1 and 0.9.
