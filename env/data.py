@@ -10,7 +10,6 @@ DATA = [
         "difficulty": "easy",
         "correct_action": "report_bug"
     },
-
     {
         "task": "bug_detection",
         "code": "a = 5\nb == 10\nprint(a + b)",
@@ -18,23 +17,6 @@ DATA = [
         "difficulty": "medium",
         "correct_action": "report_bug"
     },
-
-    {
-        "task": "bug_detection",
-        "code": "password = '12345'",
-        "type": "security_issue",
-        "difficulty": "hard",
-        "correct_action": "report_bug"
-    },
-
-    {
-        "task": "bug_detection",
-        "code": "eval(user_input)",
-        "type": "security_issue",
-        "difficulty": "hard",
-        "correct_action": "report_bug"
-    },
-
     {
         "task": "bug_detection",
         "code": "eval(input())",
@@ -48,15 +30,21 @@ DATA = [
         "task": "performance_review",
         "code": "for i in range(len(arr)):\n    print(arr[i])",
         "type": "performance_issue",
+        "difficulty": "easy",
+        "correct_action": "improve_code"
+    },
+    {
+        "task": "performance_review",
+        "code": "result = ''\nfor s in strings:\n    result += s",
+        "type": "performance_issue",
         "difficulty": "medium",
         "correct_action": "improve_code"
     },
-
     {
         "task": "performance_review",
-        "code": "for i in range(len(arr)): print(arr[i])",
+        "code": "for i in range(len(arr)):\n    for j in range(len(arr)):\n        print(arr[i], arr[j])",
         "type": "performance_issue",
-        "difficulty": "medium",
+        "difficulty": "hard",
         "correct_action": "improve_code"
     },
 
@@ -68,12 +56,18 @@ DATA = [
         "difficulty": "easy",
         "correct_action": "approve"
     },
-
     {
         "task": "clean_code_approval",
         "code": "if x == 5:\n    print(x)",
         "type": "clean",
-        "difficulty": "easy",
+        "difficulty": "medium",
+        "correct_action": "approve"
+    },
+    {
+        "task": "clean_code_approval",
+        "code": "def add(a, b):\n    return a + b",
+        "type": "clean",
+        "difficulty": "hard",
         "correct_action": "approve"
     }
 
