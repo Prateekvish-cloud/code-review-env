@@ -1,20 +1,25 @@
-name: code-review-env
-description: AI environment for code review with multiple tasks and graders
+env_id: code-review-env
+version: "1.0.0"
+description: "AI environment for code review"
 
 tasks:
-  - name: bug_detection
-    description: Detect bugs in code
-  - name: performance_review
-    description: Suggest performance improvements
-  - name: clean_code_approval
-    description: Approve correct code
+  - id: bug_detection
+    difficulty: easy
+    max_steps: 10
+    grader:
+      type: llm
+      prompt_template: "Score the bug detection strictly between 0 and 1."
 
-actions:
-  - report_bug
-  - improve_code
-  - approve
+  - id: performance_review
+    difficulty: medium
+    max_steps: 15
+    grader:
+      type: llm
+      prompt_template: "Score the performance review strictly between 0 and 1."
 
-observation_space:
-  type: text
-
-reward_range: [0.1, 0.9]
+  - id: clean_code_approval
+    difficulty: hard
+    max_steps: 20
+    grader:
+      type: llm
+      prompt_template: "Score the code approval strictly between 0 and 1."
