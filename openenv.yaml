@@ -7,19 +7,19 @@ tasks:
     difficulty: easy
     max_steps: 10
     grader:
-      type: llm
-      prompt_template: "Score the bug detection 0.0 to 1.0."
+      type: python
+      entry_point: env.grader:grade_bug_detection
 
   - id: performance_review
     difficulty: medium
     max_steps: 15
     grader:
-      type: llm
-      prompt_template: "Score the performance review 0.0 to 1.0."
+      type: python
+      entry_point: env.grader:grade_performance_review
 
   - id: clean_code_approval
     difficulty: hard
     max_steps: 20
     grader:
-      type: llm
-      prompt_template: "Score the code approval 0.0 to 1.0."
+      type: python
+      entry_point: env.grader:grade_clean_code_approval
