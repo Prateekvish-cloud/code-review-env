@@ -5,7 +5,6 @@ from typing import List, Optional
 from openai import OpenAI
 
 from env.data import DATA
-from env.models import CodeAction
 
 IMAGE_NAME = os.getenv("IMAGE_NAME")
 API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY")
@@ -17,12 +16,6 @@ BENCHMARK = os.getenv("BENCHMARK", "code-review-env")
 client: Optional[OpenAI] = None
 if API_KEY:
     client = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
-
-TASK_ORDER = [
-    "bug_detection",
-    "performance_review",
-    "clean_code_approval",
-]
 
 
 def log_start(task: str, env: str, model: str) -> None:
@@ -88,8 +81,10 @@ Reply with only one word: report_bug or improve_code or approve
         )
 
         action = (response.choices[0].message.content or "").strip().lower()
+
         if action in ["report_bug", "improve_code", "approve"]:
             return action
+
         return None
 
     except Exception:
@@ -111,7 +106,7 @@ def calculate_reward(action: str, correct_action: str) -> float:
 
 
 async def run_task(task_name: str) -> None:
-    task_examples = [item for item in DATA if item["task"] == task_name]
+    task_examples = [item for item in DATA if item["task"] == task_name][:3]
 
     rewards: List[float] = []
     steps_taken = 0
@@ -129,7 +124,7 @@ async def run_task(task_name: str) -> None:
         rewards.append(reward)
         steps_taken = step
 
-        done = step == len(task_examples)
+        done = step == 3
 
         log_step(
             step=step,
@@ -139,7 +134,7 @@ async def run_task(task_name: str) -> None:
             error=None,
         )
 
-    score = sum(rewards) / len(rewards) if rewards else 0.1
+    score = sum(rewards) / 3 if rewards else 0.1
     score = min(max(score, 0.1), 0.9)
     success = score >= 0.5
 
@@ -147,7 +142,7 @@ async def run_task(task_name: str) -> None:
 
 
 async def main() -> None:
-    for task_name in TASK_ORDER:
+    for task_name in ["bug_detection", "performance_review", "clean_code_approval"]:
         await run_task(task_name)
 
 
