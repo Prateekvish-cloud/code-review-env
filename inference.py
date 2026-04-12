@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from openai import OpenAI
 
-from env.environment import CodeReviewEnv
+from env.data import DATA
 from env.models import CodeAction
 
 IMAGE_NAME = os.getenv("IMAGE_NAME")
@@ -12,15 +12,17 @@ API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY")
 API_BASE_URL = os.getenv("API_BASE_URL") or "https://router.huggingface.co/v1"
 MODEL_NAME = os.getenv("MODEL_NAME") or "Qwen/Qwen2.5-72B-Instruct"
 
-TASK_NAME = os.getenv("TASK_NAME", "code-review")
 BENCHMARK = os.getenv("BENCHMARK", "code-review-env")
-
-MAX_STEPS = 5
-SUCCESS_SCORE_THRESHOLD = 0.1
 
 client: Optional[OpenAI] = None
 if API_KEY:
     client = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
+
+TASK_ORDER = [
+    "bug_detection",
+    "performance_review",
+    "clean_code_approval",
+]
 
 
 def log_start(task: str, env: str, model: str) -> None:
@@ -51,11 +53,9 @@ def simple_policy(code: str) -> str:
         return "report_bug"
     if "password" in code:
         return "report_bug"
-
     if " = " in code and "==" not in code:
         return "report_bug"
-
-    if "range(len(" in code:
+    if "range(len(" in code or "result +=" in code:
         return "improve_code"
 
     return "approve"
@@ -88,71 +88,67 @@ Reply with only one word: report_bug or improve_code or approve
         )
 
         action = (response.choices[0].message.content or "").strip().lower()
-
         if action in ["report_bug", "improve_code", "approve"]:
             return action
-
         return None
 
     except Exception:
         return None
 
 
-async def main() -> None:
-    env = await CodeReviewEnv.from_docker_image(IMAGE_NAME)
+def calculate_reward(action: str, correct_action: str) -> float:
+    if action == correct_action:
+        return 0.9
+
+    if correct_action == "report_bug" and action == "improve_code":
+        return 0.5
+    if correct_action == "improve_code" and action == "report_bug":
+        return 0.5
+    if correct_action == "approve" and action == "improve_code":
+        return 0.3
+
+    return 0.1
+
+
+async def run_task(task_name: str) -> None:
+    task_examples = [item for item in DATA if item["task"] == task_name]
 
     rewards: List[float] = []
     steps_taken = 0
-    success = False
-    score = 0.0
 
-    log_start(task=TASK_NAME, env=BENCHMARK, model=MODEL_NAME)
+    log_start(task=task_name, env=BENCHMARK, model=MODEL_NAME)
 
-    try:
-        result = await env.reset()
+    for step, sample in enumerate(task_examples, start=1):
+        code = sample["code"]
 
-        for step in range(1, MAX_STEPS + 1):
-            if result.done:
-                break
+        action_str = ai_policy(code)
+        if not action_str:
+            action_str = simple_policy(code)
 
-            code = result.observation.code
+        reward = calculate_reward(action_str, sample["correct_action"])
+        rewards.append(reward)
+        steps_taken = step
 
-            action_str = ai_policy(code)
-            if not action_str:
-                action_str = simple_policy(code)
+        done = step == len(task_examples)
 
-            result = await env.step(CodeAction(action=action_str))
+        log_step(
+            step=step,
+            action=action_str,
+            reward=reward,
+            done=done,
+            error=None,
+        )
 
-            reward = result.reward or 0.0
-            done = result.done
-            error = None
+    score = sum(rewards) / len(rewards) if rewards else 0.1
+    score = min(max(score, 0.1), 0.9)
+    success = score >= 0.5
 
-            rewards.append(reward)
-            steps_taken = step
+    log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
 
-            log_step(
-                step=step,
-                action=action_str,
-                reward=reward,
-                done=done,
-                error=error,
-            )
 
-            if done:
-                break
-
-        max_total_reward = float(MAX_STEPS)
-        score = sum(rewards) / max_total_reward if max_total_reward > 0 else 0.0
-        score = min(max(score, 0.0), 1.0)
-        success = score >= SUCCESS_SCORE_THRESHOLD
-
-    finally:
-        try:
-            await env.close()
-        except Exception:
-            pass
-
-        log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
+async def main() -> None:
+    for task_name in TASK_ORDER:
+        await run_task(task_name)
 
 
 if __name__ == "__main__":
